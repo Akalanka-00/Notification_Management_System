@@ -52,9 +52,7 @@ const AdminNotification = () => {
       pushed_time: currentTime,
     });
   }
-  function getUserID(){
-    return "BVxdnzry0JmxCfW9dA4w";
-  }
+
 
   function sendNotification(){
 
