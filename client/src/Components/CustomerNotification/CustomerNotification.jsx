@@ -5,11 +5,17 @@ import Container from "react-bootstrap/Container";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import baseUrl from "../../Apis/baseUrl";
-import CustomerNotificationCard from "./CustomerNotificationCard";
 
 const CustomerNotification = () => {
-  const [notificationData, setNotificationData] = useState([]);
-  const [user_id, serUser_id] = useState("wzPWOYMQpdxuiP1OfsCH");
+ // const [notificationData, setNotificationData] = useState([]);
+ // const [notificationSize, setNotificationSize]= useState(0);
+  //const [user_id, serUser_id] = useState("wzPWOYMQpdxuiP1OfsCH");
+
+  const [dataLoaded, setDataLoaded]=useState(false)
+
+  var notificationData=[];
+  var user_id="wzPWOYMQpdxuiP1OfsCH"
+  var notification_list_size=0;
 
   function getUserID() {
     return "QZS3ql8T9MD8ETj3IobD";
@@ -20,77 +26,32 @@ const CustomerNotification = () => {
     baseUrl
       .get("/api/customer/get/marked/notification" + user_id)
       .then((res) => {
-        setNotificationData(res.data);
-        console.log(notificationData.title);
+        notificationData = (res.data);
+        console.log(notificationData);
         // alert(res.data)
       })
       .catch((err) => {
-        alert(err)
+        alert(err);
       });
   }
 
 
-  function NotificationModel(props) {
-    let count = 0;
-    return (
-      <Modal {...props} aria-labelledby="contained-modal-title-vcenter">
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            New Notifications
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="show-grid">
-          <Container>
-            {notificationData.map((element, index) => (
-              <div key={index}>
-                {count < 3 ? (
-                  <>
-                    <Row>
-                      {(count = count + 1)}
-                      <CustomerNotificationCard notificationData={element} />
-                    </Row>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </div>
-            ))}
-          </Container>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button href="/customer/notifications" onClick={props.onHide}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    );
+  //getSizeOfUnReadNotificationList()
+  return <div className="notification-container">
+<Button onClick={()=>{
+  dataLoaded?setDataLoaded(false):setDataLoaded(true)
+  if(dataLoaded){
+    getUnReadNotificationList();
+console.log("Data loaded")
   }
 
 
-  const [modalShow, setModalShow] = useState(false);
-
-  return (
-    <div className="notification-container">
-      <div className="notification-btn">
-        <div className="notofications">
-          <NotificationModel
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-          />{" "}
-        </div>
-
-        <Button
-          variant="primary"
-          onClick={() => {
-            getUnReadNotificationList();
-            setModalShow(true);
-          }}
-        >
-          Notifications
-        </Button>
-      </div>
-    </div>
-  );
+}}>
+  <div className="btn-text">Notification</div>
+  {dataLoaded?<div className="notification-counter">{notificationData.length}</div>:""}
+  
+</Button>
+  </div>;
 };
 
 export default CustomerNotification;

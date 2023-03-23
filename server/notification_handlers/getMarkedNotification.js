@@ -12,9 +12,9 @@ module.exports = async function get_Marked_Notification(req,res){
       const marked_Notification_Snapshot = await db.collection("UserDataCollection")
       .orderBy("username")     
       .get();
-      const marked_Notification_List = marked_Notification_Snapshot.docs.map((doc)=>({       
-        id: doc.id, ...doc.data()
-      }));
+      // const marked_Notification_List = marked_Notification_Snapshot.docs.map((doc)=>({       
+      //   id: doc.id, ...doc.data()
+      // }));
 
 
       var selected_user;
