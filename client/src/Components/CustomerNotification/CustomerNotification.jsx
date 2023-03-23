@@ -40,7 +40,7 @@ const CustomerNotification = () => {
   return <div className="notification-container">
 <Button onClick={()=>{
   dataLoaded?setDataLoaded(false):setDataLoaded(true)
-  if(dataLoaded){
+  if(!dataLoaded){
     getUnReadNotificationList();
 console.log("Data loaded")
   }
@@ -48,7 +48,7 @@ console.log("Data loaded")
 
 }}>
   <div className="btn-text">Notification</div>
-  {dataLoaded?<div className="notification-counter">{notificationData.length}</div>:""}
+  {!dataLoaded?<div className="notification-counter">{notificationData}</div>:""}
   
 </Button>
   </div>;
